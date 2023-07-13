@@ -17,14 +17,7 @@ def create_app(test_config=None):
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    if test_config is None:
-        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-            "SQLALCHEMY_DATABASE_URI")
-        # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('RENDER_DATABASE_URI')
-    else:
-        app.config["TESTING"] = True
-        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-            "SQLALCHEMY_TEST_DATABASE_URI")
+    app.config["SQLALCHEMY_DATABASE_URI"] = "SQLALCHEMY_DATABASE_URI"
 
     # Import models here for Alembic setup
     from app.models.account import Account
