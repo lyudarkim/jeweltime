@@ -8,3 +8,11 @@ class Account(db.Model):
     email = db.Column(db.String(100))
     zipcode = db.Column(db.Integer)
     projects = db.relationship('Project', backref='account')
+
+    def to_dict(self):
+        return {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            "zipcode": self.zipcode
+        }
