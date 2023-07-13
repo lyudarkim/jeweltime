@@ -22,3 +22,11 @@ def create_account():
     db.session.commit()
 
     return {"account": new_account.to_dict()}, 201
+
+@accounts_bp.route("", methods=['GET'])
+def get_accounts():
+
+    accounts = Account.query.all()
+
+    accounts_response = [account.to_dict() for account in accounts]
+    return jsonify(accounts_response), 200
