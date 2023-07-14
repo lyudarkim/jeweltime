@@ -21,6 +21,32 @@ def create_project():
     db.session.add(new_project)
     db.session.commit()
 
-    return {"account": new_project.to_dict()}, 201
+    return {"project": new_project.to_dict()}, 201
+
+
+@projects_bp.route("", methods=['GET'])
+def get_projects():
+
+    projects = Project.query.all()
+
+    projects_response = [project.to_dict() for project in projects]
+    return jsonify(projects_response), 200
+
+
+@projects_bp.route("/<project_id>", methods=["DELETE"])
+def delete_one_project(project_id):
+    
+    id = int(project_id)
+    project_to_delete: Project.query.get(id)
+
+    db.session.delete(project_to_delete)
+    db.session.commit()
+
+    project_name = project_to_delete.project_name
+
+    return {"details": f'Project {project_id} "{project_name}" successfully deleted'}, 200
+
+
+
 
 

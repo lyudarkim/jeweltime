@@ -23,6 +23,7 @@ def create_account():
 
     return {"account": new_account.to_dict()}, 201
 
+
 @accounts_bp.route("", methods=['GET'])
 def get_accounts():
 
