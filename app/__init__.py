@@ -22,6 +22,7 @@ def create_app(test_config=None):
     # Import models here for Alembic setup
     from app.models.account import Account
     from app.models.project import Project
+    from app.models.signin import Signin
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -29,8 +30,12 @@ def create_app(test_config=None):
     # Register Blueprints here
     from .routes.account import accounts_bp
     from .routes.project import projects_bp
+    from .routes.account import signin_bp
+    from .routes.account import test_bp
 
     app.register_blueprint(accounts_bp)
     app.register_blueprint(projects_bp)
+    app.register_blueprint(signin_bp)
+    app.register_blueprint(test_bp)
 
     return app
