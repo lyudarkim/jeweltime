@@ -52,7 +52,7 @@ def update_one_account(accountId):
         print(f"Received body, {request_body} with account id: {accountId}")
         print("Email updated")
         return {"account": request_body}, 200
-    
+
 
 # Route to test sign in
 signin_bp = Blueprint("signin", __name__, url_prefix="/signin")
