@@ -54,6 +54,49 @@ def update_one_account(accountId):
         return {"account": request_body}, 200
 
 
+@accounts_bp.route("/<accountId>/projects", methods=['GET'])
+def get_projects(accountId):
+    print("Inside get projects @@@@@@@@@")
+    request_body = request.get_json()
+
+    projects = [
+            {
+            "accountId": 1234,
+            "projectId": 111,
+            "projectName": "ring",
+            "description": "ring with diamonds",
+            "startedAt": "01/01/23",
+            "completedAt": "01/03/23",
+            "hoursSpent": 30,
+            "materialsCost": 100,
+            "materials": "gold, diamonds",
+            "metals": "gold",
+            "gemstones": "diamonds",
+            "shape": "circular",
+            "jewelryType": "ring",
+            "notes": "None"
+            },
+            {
+            "accountId": 1234,
+            "projectId": 112,
+            "projectName": "chain",
+            "description": "golden necklace",
+            "startedAt": "01/04/23",
+            "completedAt": "01/07/23",
+            "hoursSpent": 30,
+            "materialsCost": 100,
+            "materials": "gold",
+            "metals": "gold",
+            "gemstones": "none",
+            "shape": "string",
+            "jewelryType": "necklace",
+            "notes": "none"
+            }
+        ]
+
+    return {"projects": projects}, 200
+
+
 # Route to test sign in
 signin_bp = Blueprint("signin", __name__, url_prefix="/signin")
 @signin_bp.route("", methods=['POST'])
@@ -61,7 +104,7 @@ def authenticate_user_info():
     USER = "user"
     PASSWORD = "password"
     print("Inside signnin!@@@@@@")
-    userInfo = {USER: "Angie123tdd", PASSWORD: "ryrtyry123"}
+    userInfo = {USER: "angie123", PASSWORD: "12345"}
     request_body = request.get_json()
     
     print(request_body)

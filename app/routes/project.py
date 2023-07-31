@@ -7,6 +7,7 @@ from app.models.account import Account
 
 projects_bp = Blueprint("projects", __name__, url_prefix="/projects")
 
+
 @projects_bp.route("", methods=['POST'])
 def create_project():
     print("Inside create project@@@@@@@@@")
@@ -35,65 +36,24 @@ def create_project():
     return {"project": project}, 201
 
 
-@projects_bp.route("", methods=['GET'])
-def get_projects():
-
-    ACCOUNT_ID = "accountId"
+@projects_bp.route("/<projectId>", methods=['PUT'])
+def update_one_account(projectId):
     request_body = request.get_json()
+    request_project_id = int(projectId)
 
-    if not ACCOUNT_ID in request_body:
-        return {}, 400
+    if request_project_id != request_body["projectId"]:
+        return {}, 401
+    elif not "accountId" in request_body:
+        return {}, 401
+    else:
+        print(f"Received body, {request_body} with project id: {projectId}")
 
-    projects = [
-            {
-            "accountId": request_body[ACCOUNT_ID],
-            "projectId": 111,
-            "projectName": "ring",
-            "description": "ring with diamonds",
-            "startedAt": "01/01/23",
-            "completedAt": "01/03/23",
-            "hoursSpent": 30,
-            "materialsCost": 100,
-            "materials": "gold, diamonds",
-            "metals": "gold",
-            "gemstones": "diamonds",
-            "shape": "circular",
-            "jewelryType": "ring",
-            "notes": "None"
-            },
-            {
-            "accountId": request_body[ACCOUNT_ID],
-            "projectId": 112,
-            "projectName": "chain",
-            "description": "golfen necklace",
-            "startedAt": "01/04/23",
-            "completedAt": "01/07/23",
-            "hoursSpent": 30,
-            "materialsCost": 100,
-            "materials": "gold",
-            "metals": "gold",
-            "gemstones": "none",
-            "shape": "string",
-            "jewelryType": "necklace",
-            "notes": "none"
-            }
-        ]
+        return {"project": request_body}, 200
 
-    return {"projects": projects}, 200
+@projects_bp.route("/<project_id>", methods=["DELETE"])
+def delete_one_project(project_id):
 
-
-# @projects_bp.route("/<project_id>", methods=["DELETE"])
-# def delete_one_project(project_id):
-    
-#     id = int(project_id)
-#     project_to_delete: Project.query.get(id)
-
-    # db.session.delete(project_to_delete)
-    # db.session.commit()
-
-    # project_name = project_to_delete.project_name
-
-    # return {"details": f'Project {project_id} "{project_name}" successfully deleted'}, 200
+    return {"details": f'Project {project_id} successfully deleted'}, 200
 
 
 
