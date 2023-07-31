@@ -133,3 +133,9 @@ def mytest():
     return {
         "result": "ok"
         }, 200
+
+
+@accounts_bp.route("/<account_id>", methods=["DELETE"])
+def delete_one_account(account_id):
+
+    return {"details": f'Account {account_id} successfully deleted'}, 200
