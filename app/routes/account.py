@@ -22,7 +22,8 @@ def create_account():
         "firstName": request_body["firstName"],
         "lastName": request_body["lastName"],
         "email": request_body["email"],
-        "zipcode": request_body["zipcode"]
+        "zipcode": request_body["zipcode"],
+        "firebaseId": request_body["firebaseId"]
     }
     return {"account": account}, 201
 
@@ -39,18 +40,17 @@ def get_accounts():
     }
     return {"account": account}, 200
 
-
 @accounts_bp.route("/<accountId>", methods=['PUT'])
 def update_one_account(accountId):
     request_body = request.get_json()
     request_account_id = int(accountId)
-    if not "email" in request_body:
+    if not "firstName" in request_body:
         return {}, 400
     elif request_account_id != request_body["accountId"]:
         return {}, 401
     else:
         print(f"Received body, {request_body} with account id: {accountId}")
-        print("Email updated")
+        print("First name updated")
         return {"account": request_body}, 200
 
 
@@ -101,27 +101,27 @@ def get_projects(accountId):
 signin_bp = Blueprint("signin", __name__, url_prefix="/signin")
 @signin_bp.route("", methods=['POST'])
 def authenticate_user_info():
-    USER = "user"
-    PASSWORD = "password"
-    print("Inside signnin!@@@@@@")
-    userInfo = {USER: "angie123", PASSWORD: "12345"}
+    # USER = "user"
+    # PASSWORD = "password"
+    # print("Inside signnin!@@@@@@")
+    # userInfo = {USER: "angie123", PASSWORD: "12345"}
     request_body = request.get_json()
     
     print(request_body)
 
-    if userInfo[USER] == request_body[USER] \
-        and userInfo[PASSWORD] == request_body[PASSWORD]:
+    # if userInfo[USER] == request_body[USER] \
+    #     and userInfo[PASSWORD] == request_body[PASSWORD]:
 
-        account = {
+    account = {
         "accountId": 123,
         "firstName": "Angie",
         "lastName": "Contreras",
         "email": "gjhgdjhg@fgsj.com",
         "zipcode": 98011
-        }
-        return {"account": account}, 200
-    else:
-        return "Wrong user", 400
+    }
+    return {"account": account}, 200
+    # else:
+    #     return "Wrong user", 400
 
 
 test_bp = Blueprint("test", __name__, url_prefix="/test")
