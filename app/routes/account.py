@@ -7,7 +7,6 @@ from app.models.signin import Signin
 
 accounts_bp = Blueprint("accounts", __name__, url_prefix="/accounts")
 
-
 @accounts_bp.route("", methods=['POST'])
 def create_account():
     print(f"@@@@@@@@@@@@@@@@@ {request}")
@@ -25,20 +24,8 @@ def create_account():
         "zipcode": request_body["zipcode"],
         "firebaseId": request_body["firebaseId"]
     }
-    return {"account": account}, 201
+    return account, 201
 
-
-@accounts_bp.route("", methods=['GET'])
-def get_accounts():
-
-    account = {
-        "accountId": 123,
-        "firstName": "Angie",
-        "lastName": "Contreras",
-        "email": "gjhgdjhg@fgsj.com",
-        "zipcode": 98011
-    }
-    return {"account": account}, 200
 
 @accounts_bp.route("/<accountId>", methods=['PUT'])
 def update_one_account(accountId):
@@ -51,13 +38,12 @@ def update_one_account(accountId):
     else:
         print(f"Received body, {request_body} with account id: {accountId}")
         print("First name updated")
-        return {"account": request_body}, 200
+        return request_body, 200
 
 
 @accounts_bp.route("/<accountId>/projects", methods=['GET'])
 def get_projects(accountId):
     print("Inside get projects @@@@@@@@@")
-    request_body = request.get_json()
 
     projects = [
             {
@@ -93,8 +79,10 @@ def get_projects(accountId):
             "notes": "none"
             }
         ]
+    
+    # to_json = {"projects": projects}
 
-    return {"projects": projects}, 200
+    return jsonify(projects), 200
 
 
 # Route to test sign in
@@ -109,9 +97,6 @@ def authenticate_user_info():
     
     print(request_body)
 
-    # if userInfo[USER] == request_body[USER] \
-    #     and userInfo[PASSWORD] == request_body[PASSWORD]:
-
     account = {
         "accountId": 123,
         "firstName": "Angie",
@@ -119,9 +104,7 @@ def authenticate_user_info():
         "email": "gjhgdjhg@fgsj.com",
         "zipcode": 98011
     }
-    return {"account": account}, 200
-    # else:
-    #     return "Wrong user", 400
+    return account, 200
 
 
 test_bp = Blueprint("test", __name__, url_prefix="/test")
@@ -139,3 +122,13 @@ def mytest():
 def delete_one_account(account_id):
 
     return {"details": f'Account {account_id} successfully deleted'}, 200
+
+
+# Route for metals
+metals_bp = Blueprint("prices", __name__, url_prefix="/prices")
+@metals_bp.route("", methods=['GET'])
+def get_metals():
+
+    metals = [{"gold": "44.8"}, {"silver": "42.2"}, {"palladium": "43.4"}, {"alloy": "45.1"}, {'timestamp': '34567'}]
+    
+    return metals, 200

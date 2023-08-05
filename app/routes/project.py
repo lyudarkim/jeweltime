@@ -33,7 +33,7 @@ def create_project():
         "jewelryType": request_body["jewelryType"],
         "notes": request_body["notes"]
     }
-    return {"project": project}, 201
+    return project, 201
 
 
 @projects_bp.route("/<projectId>", methods=['PUT'])
@@ -48,7 +48,7 @@ def update_one_account(projectId):
     else:
         print(f"Received body, {request_body} with project id: {projectId}")
 
-        return {"project": request_body}, 200
+        return request_body, 200
 
 @projects_bp.route("/<project_id>", methods=["DELETE"])
 def delete_one_project(project_id):

@@ -32,10 +32,12 @@ def create_app(test_config=None):
     from .routes.project import projects_bp
     from .routes.account import signin_bp
     from .routes.account import test_bp
+    from .routes.account import metals_bp
 
     app.register_blueprint(accounts_bp)
     app.register_blueprint(projects_bp)
     app.register_blueprint(signin_bp)
     app.register_blueprint(test_bp)
+    app.register_blueprint(metals_bp)
 
     return app
